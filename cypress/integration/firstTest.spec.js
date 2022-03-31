@@ -4,61 +4,61 @@ describe('Our Test Suite', () => {
 
 	it('FirstTest', () => {
 
-            //Navigate to Testing Area - User Input Forms
-            cy.visit('/')
-            cy.contains('Forms').click()
-            cy.contains('Form Layouts').click()
+		//Navigate to Testing Area - User Input Forms
+		cy.visit('/')
+		cy.contains('Forms').click()
+		cy.contains('Form Layouts').click()
 
-			//By Tag Name
-			cy.get('input');
-			
-			//By ID
-			cy.get('#inputEmail1')
-			
-			//By ClassName
-			cy.get('.input-full-width')
-			
-			//By Attribute Name
-			cy.get('[placeholder]')
-			
-			//By Attribute Name and Value
-			cy.get('[placeholder="Email"]')
-			
-			//By Class Value
-			cy.get('[class="input-full-width size-medium shape-rectangle"]')
-			
-			//By Tag Name and Attribute with Value
-			cy.get('input[placeholder="Email"]')
-			
-			//By Two Different Attributes (you can add more)
-			cy.get('[placeholder="Email"][type="email"]')
-			
-			//By Tag Name, Attribute with Value, ID and ClassName
-			cy.get('input[placeholder="Email"]#inputEmail1.input-full-width')
-			
-			//The Most Recommended way By Cypress - By data-cy
-			cy.get('[data-cy="imputEmail1"]')
+		//By Tag Name
+		cy.get('input');
+		
+		//By ID
+		cy.get('#inputEmail1')
+		
+		//By ClassName
+		cy.get('.input-full-width')
+		
+		//By Attribute Name
+		cy.get('[placeholder]')
+		
+		//By Attribute Name and Value
+		cy.get('[placeholder="Email"]')
+		
+		//By Class Value
+		cy.get('[class="input-full-width size-medium shape-rectangle"]')
+		
+		//By Tag Name and Attribute with Value
+		cy.get('input[placeholder="Email"]')
+		
+		//By Two Different Attributes (you can add more)
+		cy.get('[placeholder="Email"][type="email"]')
+		
+		//By Tag Name, Attribute with Value, ID and ClassName
+		cy.get('input[placeholder="Email"]#inputEmail1.input-full-width')
+		
+		//The Most Recommended way By Cypress - By data-cy
+		cy.get('[data-cy="imputEmail1"]')
 	})
 
 	it('secondTest', () => {
 
-	//Navigate to Testing Area - User Input Forms
-	cy.visit('/')
-	cy.contains('Forms').click()
-	cy.contains('Form Layouts').click()
+		//Navigate to Testing Area - User Input Forms
+		cy.visit('/')
+		cy.contains('Forms').click()
+		cy.contains('Form Layouts').click()
 
 
-	//Get the 'Sign in' button for the 'Using the Grid' Form
-	cy.contains('nb-card', 'Using the Grid').find('button').should('contain', 'Sign in')
+		//Get the 'Sign in' button for the 'Using the Grid' Form
+		cy.contains('nb-card', 'Using the Grid').find('button').should('contain', 'Sign in')
 
 
-	//Get the 'Sign in' button for the 'Horizontal' Form (Traverse DOM method)
-	cy.get('#inputEmail3')
-		.parents('form')
-		.find('button')
-		.should('contain', 'Sign in')
-		.parents('form')
-		.find('nb-checkbox').click({force: true})
+		//Get the 'Sign in' button for the 'Horizontal' Form (Traverse DOM method)
+		cy.get('#inputEmail3')
+			.parents('form')
+			.find('button')
+			.should('contain', 'Sign in')
+			.parents('form')
+			.find('nb-checkbox').click({force: true})
 	})
 
 
@@ -107,9 +107,6 @@ describe('Our Test Suite', () => {
 		cy.contains('Forms').click()
 		cy.contains('Form Layouts').click()
 
-
-
-
 		//Invoke Command Example 1
 
 		//There are many ways to get the 'Email address' label on the from 'Using the grid', ill show you 3 ways
@@ -138,7 +135,6 @@ describe('Our Test Suite', () => {
 		//it will uncheck the checkbox and fail the second test.
 
 		//1 - Using invoke + should
-
 		// cy.contains('nb-card', 'Basic form')
 		// 	.find('nb-checkbox')
 		// 	.click()
@@ -147,7 +143,6 @@ describe('Our Test Suite', () => {
 		// 	.should('contain', 'checked')
 
 		//2 - Using invoke + then
-
 		cy.contains('nb-card', 'Basic form')
 			.find('nb-checkbox')
 			.click()
@@ -155,23 +150,20 @@ describe('Our Test Suite', () => {
 			.invoke('attr', 'class')
 			.then(classValue => {
 				expect(classValue).to.contain('checked')
-			})
+		    })
 
 		
 
-
-			
-		//Invoke Command Example 3 - FINISH THIS OFF
+		//Invoke Command Example 3
 		//We will use the invoke command to verify that the date inside our date input is correct via properties
 
 		cy.contains('Datepicker').click()
 
-		cy.get('[placeholder="Form Picker"]').click({force: true})
-
-	
-
-
-
+		cy.contains('nb-card', 'Common Datepicker').find('input').then( input => {
+			cy.wrap(input).click({force: true})
+			cy.get('nb-calendar-day-picker').contains('18').click({force: true})
+			cy.wrap(input).invoke('prop', 'value').should('contain', 'Mar 18, 2022')
+		})
 	})
 
 })
