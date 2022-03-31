@@ -102,7 +102,7 @@ describe('Our Test Suite', () => {
 		})
 	})
 
-	it.only('Invoke Command', () => {
+	it('Invoke Command', () => {
 		cy.visit('/')
 		cy.contains('Forms').click()
 		cy.contains('Form Layouts').click()
@@ -163,6 +163,45 @@ describe('Our Test Suite', () => {
 			cy.wrap(input).click({force: true})
 			cy.get('nb-calendar-day-picker').contains('18').click({force: true})
 			cy.wrap(input).invoke('prop', 'value').should('contain', 'Mar 18, 2022')
+		})
+	})
+
+
+
+	it('Radiobuttons', () => {
+		cy.visit('/')
+		cy.contains('Forms').click()
+		cy.contains('Form Layouts').click()
+
+		cy.contains('nb-card', 'Using the Grid').find('[type="radio"]').then(radioButtons => {
+			cy.wrap(radioButtons)
+				.first()
+				.check({force: true})
+				.should('be.checked')
+
+			cy.wrap(radioButtons)
+				.eq(1)
+				.check({force: true})
+				.should('be.checked')
+
+			cy.wrap(radioButtons)
+				.first()
+				.should('not.be.checked')
+
+			cy.wrap(radioButtons)
+				.eq(2)
+				.should('be.disabled')
+		})
+	})
+
+	it.only('Checkboxes', () => {
+		cy.visit('/')
+		cy.contains('Modal & Overlays').click()
+		cy.contains('Toastr').click()
+
+		cy.get('nb-checkbox').find('[type="checkbox"]').then(checkboxes => {
+			cy.wrap(checkboxes).first().click({force:true}).should('not.be.checked')
+			cy.wrap(checkboxes).eq(1).check({force:true}).should('be.checked')
 		})
 	})
 
